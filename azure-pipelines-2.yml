@@ -11,7 +11,7 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '7066bed3-a53e-42da-8f8e-8bda4eb3acee'
-  imageRepository: 'recep'
+  imageRepository: 'tricep'
   containerRegistry: 'voicerecep.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
@@ -52,6 +52,5 @@ stages:
           WebAppName: 'receptionist'
           DockerNamespace: 'voicerecep'
           DockerRepository: '$(imageRepository)'
-          DockerImageTag: '$(tag)'
   
 
