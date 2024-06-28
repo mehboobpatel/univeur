@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visitor Registration Form</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #000000, #303030);
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #ffffff;
+            font-size: 28px;
+        }
+
+        p {
+            color: #ffffff;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        li {
+            color: #ffffff;
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: block;
+            text-align: center;
+        }
+
+        audio {
+            margin-top: 20px;
+        }
+
+        label {
+            background: linear-gradient(to center, #404040, #c3b4b4);
+            display: inline-block;
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body onload="playAudio()">
+    <h1>Thank you for visiting!</h1>
+    <p>Your details:</p>
+    <ul>
+        <li>Full Name: {{ full_name }}</li><br>
+        <li>Phone Number: {{ number }}</li><br>
+        <li>Purpose of Visit: {{ purpose }}</li><br>
+        <li>Gender: {{ gender }}</li><br>
+        <li>Date: {{ current_date }}</li><br>
+        <li>Time: {{ current_time }}</li>
+    </ul>
+    <audio id="audio" controls autoplay playsinline>
+        <source src="{{ url_for('static', filename='../static/' + full_name + '.mp3') }}" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+        function playAudio() {
+            var audio = document.getElementById("audio");
+            audio.play();
+        }
+    </script>
+</body>
+</html>

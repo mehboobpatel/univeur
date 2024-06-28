@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Back to Development!</title>
+	<style>
+		body {
+			background: linear-gradient(to bottom, #aad6f7, #4295f5);
+			color: #ffffff;
+			font-family: Arial, sans-serif;
+			text-align: center;
+			padding: 50px;
+		}
+
+		h1 {
+			margin-top: 0;
+		}
+
+		form {
+			display: inline-block;
+			text-align: left;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 0px;
+			font-weight: bold;
+			color: #1a10c8;
+		}
+
+		input[type="text"],
+		input[type="submit"] {
+			background-color: #ffffff;
+			border: none;
+			border-radius: 5px;
+			padding: 10px;
+			margin-bottom: 10px;
+			width: 250px;
+		}
+
+		input[type="submit"] {
+			background-color: #09e3d4;
+			color: #ffffff;
+			cursor: pointer;
+		}
+
+		.checkbox-container {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			margin-bottom: 10px;
+		}
+
+		.checkbox-container label {
+			margin-right: 5px;
+		}
+
+		
+	</style>
+</head>
+<body>
+	<h1>Hello Have a GoodDay! Please Enter your details to register</h1>
+	<form method="POST" action="{{ url_for('submit') }}">
+		<label for="full_name">Full Name:</label>
+		<input type="text" id="full_name" name="full_name" required><br><br>
+
+		<label for="phone">Phone Number:</label>
+		<input type="text" id="phone" name="number" required><br><br>
+
+		<label for="purpose">Purpose of Visit:</label>
+		<input type="text" id="purpose" name="purpose" required><br><br>
+		<label for="gender">Gender:</label><br>
+
+		<div class="checkbox-container">
+			<input type="checkbox" id="male" name="gender" value="male">
+			<label for="male">Male</label>
+
+			<input type="checkbox" id="female" name="gender" value="female">
+			<label for="female">Female</label>
+		</div><br>
+
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>
