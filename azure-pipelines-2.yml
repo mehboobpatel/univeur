@@ -11,7 +11,7 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '7066bed3-a53e-42da-8f8e-8bda4eb3acee'
-  imageRepository: 'azurerecep'
+  imageRepository: 'recep'
   containerRegistry: 'voicerecep.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
@@ -36,4 +36,22 @@ stages:
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
-          $(tag)
+- stage: Deploy
+  displayName: Deploy
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+      - task: AzureRmWebAppDeployment@4
+        inputs:
+          ConnectionType: 'AzureRM'
+          azureSubscription: 'Azure for Students (8c467071-620f-4d5d-9c84-38c9f928d546)'
+          appType: 'webAppContainer'
+          WebAppName: 'receptionist'
+          DockerNamespace: 'voicerecep'
+          DockerRepository: '$(imageRepository)'
+          DockerImageTag: '$(tag)'
+  
+
