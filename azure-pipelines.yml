@@ -37,3 +37,14 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+  
+
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+          ConnectionType: 'AzureRM'
+          azureSubscription: 'Azure for Students(8c467071-620f-4d5d-9c84-38c9f928d546)'
+          appType: 'webAppContainer'
+          WebAppName: 'receptionist'
+          DockerNamespace: 'voicerecep.azurecr.io'
+          DockerRepository: 'recep'
+    
