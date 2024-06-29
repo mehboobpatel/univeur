@@ -7,7 +7,7 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '809e55ef-0b9a-419c-9fe7-55a4c5023f9a'
-  imageRepository: 'recep'
+  imageRepository: 'tricep'
   containerRegistry: 'voicerecep.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
@@ -24,6 +24,8 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+    - script: echo "Building Docker image"
+      displayName: 'Print Build Start'
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
@@ -32,6 +34,9 @@ stages:
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
+          $(tag)
+    - script: echo "Docker image built and pushed with tag $(tag)"
+      displayName: 'Print Build End'
 
 - stage: Deploy
   displayName: Deploy stage
@@ -42,6 +47,8 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+    - script: echo "Starting deployment to Azure Web App"
+      displayName: 'Print Deploy Start'
     - task: AzureRmWebAppDeployment@4
       displayName: Deploy to Azure Web App
       inputs:
@@ -50,5 +57,7 @@ stages:
         appType: 'webAppContainer'
         WebAppName: 'receptionist'
         DockerNamespace: 'voicerecep.azurecr.io'
-        DockerRepository: 'recep'
-        DockerImageTag: '$(tag)'
+        DockerRepository: 'tricep'
+        DockerImageTag: '$(Build.BuildId)'
+    - script: echo "Deployment to Azure Web App completed"
+      displayName: 'Print Deploy End'
