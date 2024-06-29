@@ -45,6 +45,6 @@ stages:
         appType: 'webAppContainer'
         WebAppName: 'receptionist'
         DockerNamespace: 'voicerecep.azurecr.io'
-        DockerRepository: 'voicerecep.azurecr.io/tricep:$(Build.BuildId)'
+        DockerRepository: 'tricep:$(Build.BuildId)'
         StartupCommand: 'python app.py'
       
