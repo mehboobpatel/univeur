@@ -1,0 +1,32 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'voicerecep'
+      repository: 'new'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
+      tags: |
+        $(Build.BuildId)
+        latest
+
+  - task: AzureRmWebAppDeployment@4
+    inputs:
+      ConnectionType: 'AzureRM'
+      azureSubscription: 'VoiceReception'
+      appType: 'webAppContainer'
+      WebAppName: 'receptionist'
+      DockerNamespace: 'voicerecep'
+      DockerRepository: 'new'
+      DockerImageTag: 'latest'
