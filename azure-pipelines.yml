@@ -32,7 +32,6 @@ stages:
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
-          $(tag)
 
 - stage: Deploy
   displayName: Deploy stage
