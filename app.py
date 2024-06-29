@@ -13,13 +13,11 @@ driver = '{ODBC Driver 17 for SQL Server}'
 
 # Use DefaultAzureCredential to get a token for Azure SQL
 credential = DefaultAzureCredential()
-token = credential.get_token("https://database.windows.net/").token
+token = credential.get_token("https://database.windows.net/.default").token.encode('utf-16le')
 
 # Connect to Azure SQL DB
-cnxn = pyodbc.connect(
-    f'DRIVER={driver};SERVER={server};DATABASE={database};Authentication=ActiveDirectoryMsi',
-    attrs_before={1256: token}  # SQL_COPT_SS_ACCESS_TOKEN
-)
+conn_str = f'DRIVER={driver};SERVER={server};DATABASE={database};'
+cnxn = pyodbc.connect(conn_str, attrs_before={1256: token})  # SQL_COPT_SS_ACCESS_TOKEN
 
 current_datetime = datetime.datetime.now()
 
