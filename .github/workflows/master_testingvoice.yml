@@ -26,6 +26,9 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
+
+      - name: Install Setup Tools 
+        run: pip install wheel setuptools 
       
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -57,6 +60,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: python-app
+          
+      - name: Upgrade PIP
+        run: pip install --upgrade pip
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
