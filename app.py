@@ -1,43 +1,26 @@
-from flask import Flask, render_template, request, g
+from azure.identity import DefaultAzureCredential
+from flask import Flask, render_template, request
 import pyodbc
 from gtts import gTTS
+import os
+import subprocess
+# from azure.identity import DefaultAzureCredential
+# from azure.keyvault.secrets import SecretClient
 import datetime
-import logging
-from azure.identity import InteractiveBrowserCredential
-
-# Setup logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+current_datetime = datetime.datetime.now()
 
 app = Flask(__name__)
 
-# Database connection details
+# Connect to Azure SQL DB
 server = 'voiceserver.database.windows.net'
 database = 'voicedb'
+password = 'Viratkohli18'
 driver = '{ODBC Driver 17 for SQL Server}'
+# Use Azure AD authentication
+credential = DefaultAzureCredential()
+# cnxn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};UID={username};PWD={password}')
 
-def get_db_connection():
-    if 'cnxn' not in g:
-        try:
-            credential = InteractiveBrowserCredential()
-            token = credential.get_token("https://database.windows.net/.default").token.encode('utf-16le')
-
-            # Connect to Azure SQL DB
-            conn_str = f'DRIVER={driver};SERVER={server};DATABASE={database};'
-            g.cnxn = pyodbc.connect(conn_str, attrs_before={1256: token})  # SQL_COPT_SS_ACCESS_TOKEN
-            logger.info("Connected to the database successfully.")
-        except Exception as e:
-            logger.error(f"Failed to connect to the database: {e}")
-            g.cnxn = None
-    return g.cnxn
-
-@app.teardown_appcontext
-def close_db_connection(exception):
-    cnxn = g.pop('cnxn', None)
-    if cnxn is not None:
-        cnxn.close()
-
-current_datetime = datetime.datetime.now()
+cnxn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};Authentication=ActiveDirectoryPassword;UID=VoiceDB@masterpatel786yahoo.onmicrosoft.com;PWD={password}')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -51,25 +34,18 @@ def submit():
     purpose = request.form.get('purpose')
     number = request.form.get('number')
     welcome_message = f"Welcome {full_name} This App is completely deployed on Azure Architecture by Maheboob"
-    gender = request.form.get('gender')
+    gender = request.form.get('gender') 
 
     current_date = current_datetime.date()
     current_time = current_datetime.time().strftime('%H:%M:%S')
 
-    cnxn = get_db_connection()
-    if cnxn is None:
-        return "Database connection error", 500
+    # Insert user details into boomlet table
+    cursor = cnxn.cursor()
+    insert_query = f"INSERT INTO users (full_name, purpose, number, gender, date, time) VALUES ('{full_name}', '{purpose}', '{number}', '{gender}', '{current_date}', '{current_time}')"
+    cursor.execute(insert_query)
+    cnxn.commit()
 
-    try:
-        cursor = cnxn.cursor()
-        insert_query = "INSERT INTO users (full_name, purpose, number, gender, date, time) VALUES (?, ?, ?, ?, ?, ?)"
-        cursor.execute(insert_query, (full_name, purpose, number, gender, current_date, current_time))
-        cnxn.commit()
-        logger.info("Inserted data into the database successfully.")
-    except Exception as e:
-        logger.error(f"Failed to insert data into the database: {e}")
-        return "Database error", 500
-
+    # Generate audio file using gTTS
     tts = gTTS(welcome_message)
     tts.save(f"static/{full_name}.mp3")
 
@@ -77,19 +53,11 @@ def submit():
 
 @app.route('/database', methods=['GET'])
 def database():
-    cnxn = get_db_connection()
-    if cnxn is None:
-        return "Database connection error", 500
-
-    try:
-        cursor = cnxn.cursor()
-        select_query = "SELECT * FROM users"
-        cursor.execute(select_query)
-        rows = cursor.fetchall()
-        logger.info("Fetched data from the database successfully.")
-    except Exception as e:
-        logger.error(f"Failed to fetch data from the database: {e}")
-        return "Database error", 500
+    # Select all records from boomlet table
+    cursor = cnxn.cursor()
+    select_query = "SELECT * FROM users"
+    cursor.execute(select_query)
+    rows = cursor.fetchall()
 
     return render_template('database.html', rows=rows)
 
