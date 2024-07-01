@@ -2,11 +2,8 @@ from azure.identity import DefaultAzureCredential
 from flask import Flask, render_template, request
 import pyodbc
 from gtts import gTTS
-import os
-import subprocess
-# from azure.identity import DefaultAzureCredential
-# from azure.keyvault.secrets import SecretClient
 import datetime
+
 current_datetime = datetime.datetime.now()
 
 app = Flask(__name__)
