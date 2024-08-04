@@ -32,7 +32,7 @@ stages:
       displayName: Build and push an image to container registry
       inputs:
         command: buildAndPush
-        repository: $(containerRegistry)/$(imageRepository) # Use full path with registry
+        repository: $(imageRepository) # Use full path with registry
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
@@ -43,3 +43,5 @@ stages:
         azureSubscription: 'AzureDev'
         appName: 'receptionist'
         containers: '$(containerRegistry)/$(imageRepository):$(tag)' # Use full path with registry and tag
+      
+      
