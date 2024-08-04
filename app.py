@@ -31,7 +31,7 @@ def submit():
     full_name = request.form.get('full_name')
     purpose = request.form.get('purpose')
     number = request.form.get('number')
-    welcome_message = f"Welcome {full_name} This App is completely deployed on Azure Architecture by Maheboob"
+    welcome_message = f"Welcome {full_name} This App is completely deployed on Azure Architecture by Mehboob Patel"
     gender = request.form.get('gender') 
 
     current_date = current_datetime.date()

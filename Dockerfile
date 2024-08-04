@@ -1,42 +1,31 @@
-# Use the official Python image from the Docker Hub
+# Use the official Python base image
 FROM python:3.9-slim
-
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
-# Install system dependencies
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-    build-essential \
-    unixodbc-dev \
-    gcc\
-    g++\
-    curl \
-    gnupg2 \
-    apt-transport-https \
-    ca-certificates \
-    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list \
-    && apt-get update \
-    && ACCEPT_EULA=Y apt-get install -y msodbcsql17 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the requirements file
+# Copy and install pip requirements
 COPY requirements.txt .
+RUN python -m pip install --no-cache-dir --upgrade pip
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    unixodbc-dev \
+    gcc \
+    g++ \
+    curl \
+    gnupg2 \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy the application code
-COPY . .
+# Install Microsoft ODBC Driver for SQL Server
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN apt-get update && ACCEPT_EULA=Y apt-get install -y msodbcsql17
+RUN python -m pip install --no-cache-dir -r requirements.txt
 
-# Expose the port the app runs on
+# Copy the application files
+COPY . /app
 EXPOSE 5000
 
-# Command to run the application
+# Set the default command to run the application
 CMD ["python", "app.py"]
