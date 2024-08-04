@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visitor Registration Form</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        body {
+            background: linear-gradient(45deg, #1a45a1, #14afb4, #11cc6f);
+            background-size: 400% 400%;
+            animation: gradient-animation 10s ease-in-out infinite;
+            color: #ffffff;
+            padding: 20px;
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 36px;
+            font-family: 'Pacifico', cursive;
+        }
+
+        p {
+            font-size: 20px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        li {
+            font-size: 18px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        audio {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        label {
+            background: linear-gradient(to center, #404040, #c3b4b4);
+            display: inline-block;
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body onload="playAudio()">
+    <div>
+        <h1>Thank you for visiting!</h1>
+        <p>Your details:</p>
+        <ul>
+            <li>Full Name: {{ full_name }}</li>
+            <li>Phone Number: {{ number }}</li>
+            <li>Purpose of Visit: {{ purpose }}</li>
+            <li>Gender: {{ gender }}</li>
+            <li>Date: {{ current_date }}</li>
+            <li>Time: {{ current_time }}</li>
+        </ul>
+        <audio id="audio" controls autoplay playsinline>
+            <source src="{{ url_for('static', filename='../static/' + full_name + '.mp3') }}" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    <script>
+        function playAudio() {
+            var audio = document.getElementById("audio");
+            audio.play();
+        }
+    </script>
+</body>
+</html>
