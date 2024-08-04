@@ -11,7 +11,7 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'b7e9be6c-071a-44da-a960-626c1f5d198e'
-  imageRepository: 'tricep'
+  imageRepository: 'voicerepos'
   containerRegistry: 'voicerecep.azurecr.io'
   dockerfilePath: 'Dockerfile' # Ensure this is the correct path to your Dockerfile
   tag: '$(Build.BuildId)'
