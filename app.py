@@ -3,6 +3,7 @@ from flask import Flask, render_template, request
 import pyodbc
 from gtts import gTTS
 import datetime
+import os
 
 current_datetime = datetime.datetime.now()
 
@@ -44,6 +45,9 @@ def submit():
 
     # Generate audio file using gTTS
     tts = gTTS(welcome_message)
+    static_dir = 'static'
+    if not os.path.exists(static_dir):
+        os.makedirs(static_dir)
     tts.save(f"static/{full_name}.mp3")
 
     return render_template('success.html', full_name=full_name, purpose=purpose, number=number, gender=gender, current_date=current_date, current_time=current_time)
