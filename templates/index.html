@@ -1,84 +1,128 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Back to Development!</title>
-	<style>
-		body {
-			background: linear-gradient(to bottom, #aad6f7, #4295f5);
-			color: #ffffff;
-			font-family: Arial, sans-serif;
-			text-align: center;
-			padding: 50px;
-		}
+    <title>Back to Development!</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #1a45a1, #14afb4, #11cc6f);
+            background-size: 500% 500%;
+            animation: change-gradient 10s ease-in-out infinite;
+        }
 
-		h1 {
-			margin-top: 0;
-		}
+        @keyframes change-gradient {
+            0% {
+                background-position: 0 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0 50%;
+            }
+        }
 
-		form {
-			display: inline-block;
-			text-align: left;
-		}
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
 
-		label {
-			display: block;
-			margin-bottom: 0px;
-			font-weight: bold;
-			color: #1a10c8;
-		}
+        h1 {
+            color: #333;
+            margin-top: 0;
+            font-family: 'Pacifico', cursive;
+            font-size: 28px;
+        }
 
-		input[type="text"],
-		input[type="submit"] {
-			background-color: #ffffff;
-			border: none;
-			border-radius: 5px;
-			padding: 10px;
-			margin-bottom: 10px;
-			width: 250px;
-		}
+        form {
+            display: inline-block;
+            text-align: left;
+        }
 
-		input[type="submit"] {
-			background-color: #09e3d4;
-			color: #ffffff;
-			cursor: pointer;
-		}
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #1a10c8;
+        }
 
-		.checkbox-container {
-			display: flex;
-			align-items: center;
-			justify-content: flex-start;
-			margin-bottom: 10px;
-		}
+        input[type="text"] {
+            background-color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 250px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-		.checkbox-container label {
-			margin-right: 5px;
-		}
+        input[type="submit"] {
+            background: linear-gradient(45deg, #1a45a1, #14afb4, #11cc6f);
+            color: #ffffff;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
 
-		
-	</style>
+        input[type="submit"]:hover {
+            background: linear-gradient(45deg, #11cc6f, #14afb4, #1a45a1);
+            transform: translateY(-2px);
+        }
+
+        input[type="submit"]:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-container label {
+            margin-right: 5px;
+        }
+    </style>
 </head>
 <body>
-	<h1>Hello Have a GoodDay! Please Enter your details to register</h1>
-	<form method="POST" action="{{ url_for('submit') }}">
-		<label for="full_name">Full Name:</label>
-		<input type="text" id="full_name" name="full_name" required><br><br>
+    <div class="container">
+        <h1>Hello! Have a Good Day! Please Enter Your Details to Register</h1>
+        <form method="POST" action="{{ url_for('submit') }}">
+            <label for="full_name">Full Name:</label>
+            <input type="text" id="full_name" name="full_name" required><br><br>
 
-		<label for="phone">Phone Number:</label>
-		<input type="text" id="phone" name="number" required><br><br>
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="number" required><br><br>
 
-		<label for="purpose">Purpose of Visit:</label>
-		<input type="text" id="purpose" name="purpose" required><br><br>
-		<label for="gender">Gender:</label><br>
+            <label for="purpose">Purpose of Visit:</label>
+            <input type="text" id="purpose" name="purpose" required><br><br>
 
-		<div class="checkbox-container">
-			<input type="checkbox" id="male" name="gender" value="male">
-			<label for="male">Male</label>
+            <label for="gender">Gender:</label><br>
+            <div class="checkbox-container">
+                <input type="checkbox" id="male" name="gender" value="male">
+                <label for="male">Male</label>
 
-			<input type="checkbox" id="female" name="gender" value="female">
-			<label for="female">Female</label>
-		</div><br>
+                <input type="checkbox" id="female" name="gender" value="female">
+                <label for="female">Female</label>
+            </div><br>
 
-		<input type="submit" value="Submit">
-	</form>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 </body>
 </html>

@@ -34,12 +34,12 @@ def submit():
     welcome_message = f"Welcome {full_name} This App is completely deployed on Azure Architecture by Mehboob Patel"
     gender = request.form.get('gender') 
 
-    current_date = current_datetime.date()
-    current_time = current_datetime.time().strftime('%H:%M:%S')
+    visit_date = current_datetime.date()
+    visit_time = current_datetime.time().strftime('%H:%M:%S')
 
     # Insert user details into boomlet table
     cursor = cnxn.cursor()
-    insert_query = f"INSERT INTO users (full_name, purpose, number, gender, date, time) VALUES ('{full_name}', '{purpose}', '{number}', '{gender}', '{current_date}', '{current_time}')"
+    insert_query = f"INSERT INTO users (full_name, purpose, number, gender, date, time) VALUES ('{full_name}', '{purpose}', '{number}', '{gender}', '{visit_date}', '{visit_time}')"
     cursor.execute(insert_query)
     cnxn.commit()
 
@@ -50,7 +50,7 @@ def submit():
         os.makedirs(static_dir)
     tts.save(f"static/{full_name}.mp3")
 
-    return render_template('success.html', full_name=full_name, purpose=purpose, number=number, gender=gender, current_date=current_date, current_time=current_time)
+    return render_template('success.html', full_name=full_name, purpose=purpose, number=number, gender=gender, current_date=visit_date, current_time=visit_time)
 
 @app.route('/database', methods=['GET'])
 def database():
