@@ -12,9 +12,8 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'b7e9be6c-071a-44da-a960-626c1f5d198e'
   imageRepository: 'tricep'
-
   containerRegistry: 'voicerecep.azurecr.io'
-  dockerfilePath: ','
+  dockerfilePath: 'Dockerfile' # Ensure this is the correct path to your Dockerfile
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
@@ -33,7 +32,7 @@ stages:
       displayName: Build and push an image to container registry
       inputs:
         command: buildAndPush
-        repository: $(imageRepository)
+        repository: $(containerRegistry)/$(imageRepository) # Use full path with registry
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
@@ -41,9 +40,6 @@ stages:
     
     - task: AzureWebAppContainer@1
       inputs:
-       azureSubscription: 'AzureDev'
-       appName: 'receptionist'
-       containers: 'voicerecep.azurecr.io:tricep:$(tag)'
-      
-
-          
+        azureSubscription: 'AzureDev'
+        appName: 'receptionist'
+        containers: '$(containerRegistry)/$(imageRepository):$(tag)' # Use full path with registry and tag
