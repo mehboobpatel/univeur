@@ -17,39 +17,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python version
-        uses: actions/setup-python@v5
+      - name: Login to Azure Container Registry
+        uses: azure/docker-login@v1
         with:
-          python-version: '3.9'
+          login-server:  gitactvoice.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Create and start virtual environment
+      - name: Build and Push Docker Image
         run: |
-          python -m venv venv
-          source venv/bin/activate
-          
-      - name: Upgrade PIP
-        run: pip install --upgrade pip
-        
-      - name: Install Setup Tools 
-        run: pip install wheel setuptools
-      
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-        
-
-        
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
-
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
-
-      - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v4
-        with:
-          name: python-app
-          path: |
-            release.zip
-            !venv/
+          docker build . -t gitactvoice.azurecr.io/recep:${{ github.sha }}
+          docker push  gitactvoice.azurecr.io/recep:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -82,5 +60,6 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'testingvoice'
+          image : gitactvoice.azurecr.io/myapp:${{ github.sha }}
           slot-name: 'Production'
           

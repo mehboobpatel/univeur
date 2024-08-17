@@ -12,13 +12,17 @@ app = Flask(__name__)
 # Connect to Azure SQL DB
 server = 'voiceserver.database.windows.net'
 database = 'voicedb'
-password = 'Viratkohli18'
+username = 'voiceadmin'
+password = 'Voice@1234'
+
+#belowis AD password
+# password = 'Viratkohli18'
 driver = '{ODBC Driver 17 for SQL Server}'
 # Use Azure AD authentication
 credential = DefaultAzureCredential()
-# cnxn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};UID={username};PWD={password}')
+cnxn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};UID={username};PWD={password}')
 
-cnxn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};Authentication=ActiveDirectoryPassword;UID=VoiceDB@masterpatel786yahoo.onmicrosoft.com;PWD={password}')
+# cnxn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};Authentication=ActiveDirectoryPassword;UID=VoiceDB@masterpatel786yahoo.onmicrosoft.com;PWD={password}')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -64,3 +68,5 @@ def database():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=False)
+
+    
