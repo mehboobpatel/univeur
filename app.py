@@ -1,6 +1,8 @@
 from azure.identity import DefaultAzureCredential
 from flask import Flask, render_template, request
 import pyodbc
+from azure.keyvault.secrets import SecretClient
+
 from gtts import gTTS
 import datetime
 import os
@@ -9,11 +11,21 @@ current_datetime = datetime.datetime.now()
 
 app = Flask(__name__)
 
+VAULT_URL = "https://voicedbcred.vault.azure.net/"
+credential = DefaultAzureCredential()
+client = SecretClient(vault_url=VAULT_URL, credential=credential)
+
+# Retrieve secrets from Key Vault
+username = client.get_secret('DBUSERNAME').value
+password = client.get_secret('DBPASSWORD').value
+print(f"Database Username: {username}")
+
+
 # Connect to Azure SQL DB
 server = 'voiceserver.database.windows.net'
 database = 'voicedb'
-username = 'voiceadmin'
-password = 'Voice@1234'
+# username = 'voiceadmin'
+# password = 'Voice@1234'
 
 #belowis AD password
 # password = 'Viratkohli18'
