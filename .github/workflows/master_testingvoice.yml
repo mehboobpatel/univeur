@@ -51,6 +51,6 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'testingvoice'
-          images : gitactvoice.azurecr.io/myapp:${{ github.sha }}
+          images : gitactvoice.azurecr.io/recep:${{ github.sha }}
           slot-name: 'Production'
           
