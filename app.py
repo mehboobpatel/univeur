@@ -11,7 +11,7 @@ current_datetime = datetime.datetime.now()
 
 app = Flask(__name__)
 
-VAULT_URL = "https://voicedbcred.vault.azure.net/"
+VAULT_URL = os.getenv("KEY_VAULT_URL")
 credential = DefaultAzureCredential()
 client = SecretClient(vault_url=VAULT_URL, credential=credential)
 
