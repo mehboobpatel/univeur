@@ -15,7 +15,7 @@ app = Flask(__name__)
 credential = DefaultAzureCredential()
 
 VAULT_URL = os.getenv("KEY_VAULT")
-print(f"Vault details: {VAULT_URL}")
+print(f"Vault details is : {VAULT_URL}")
 client = SecretClient(vault_url=VAULT_URL, credential=credential)
 
 # Retrieve secrets from Key Vault
