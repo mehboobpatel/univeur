@@ -11,10 +11,11 @@ current_datetime = datetime.datetime.now()
 
 app = Flask(__name__)
 
-VAULT_URL = os.getenv("KEY_VAULT")
-print(f"Database Username: {VAULT_URL}")
 
 credential = DefaultAzureCredential()
+
+VAULT_URL = os.getenv("KEY_VAULT")
+print(f"Vault details: {VAULT_URL}")
 client = SecretClient(vault_url=VAULT_URL, credential=credential)
 
 # Retrieve secrets from Key Vault
