@@ -16,13 +16,12 @@ credential = DefaultAzureCredential()
 
 #Below we will pulling the Vault url from App service settings in Azure
 VAULT_URL = os.getenv("KEY_VAULT")
+
 client = SecretClient(vault_url=VAULT_URL, credential=credential)
 
 # Retrieve secrets from Key Vault
 username = client.get_secret('DBUSERNAME').value
 password = client.get_secret('DBPASSWORD').value
-print(f"Database Username: {username}")
-
 
 # Connect to Azure SQL DB
 server = 'voiceserver.database.windows.net'

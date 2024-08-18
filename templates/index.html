@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Back to Development!</title>
+    <title>DevOps and Azure Architecture!</title>
     <style>
         html, body {
             height: auto;
@@ -89,7 +89,34 @@
             transform: translateY(0);
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
+        
+        .footer {
+    text-align: center;
+    padding: 20px 0; /* Adds padding to the footer */
+    background: linear-gradient(45deg, #1a45a1, #14afb4, #11cc6f);
+    background-size: 500% 500%;
+    animation: change-gradient 10s ease-in-out infinite;
+    color: #ffffff;
+}
 
+.contact {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Adds space between icons */
+    margin-bottom: 10px;
+}
+
+.contact-icon {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-description {
+    margin-top: 5px;
+    font-size: 18px;
+    font-weight: 750;
+    font-family: 'Font Awesome 5 Brands';
+}
         .checkbox-container {
             display: flex;
             align-items: center;
@@ -119,7 +146,11 @@
             width: 60vw; /* 40% of the viewport width */
             object-fit: contain; /* Maintain aspect ratio */
         }
+
+        
     </style>
+            <script src="https://kit.fontawesome.com/5f3f547070.js" crossorigin="anonymous"></script>
+            <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -153,6 +184,16 @@
         <!-- <iframe frameborder="0" style="width:100%;height:100%;" src="https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&target=self&highlight=0000ff&edit=_blank&layers=1&nav=1&title=Untitled.drawio.svg#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1xnVC-Q1dKEcuI_gAZSR0pPn2Fdinmrqe%26export%3Ddownload"></iframe> -->
         <img src="{{ url_for('static', filename='diagram.svg') }}" alt="Application Flow Diagram">
     </div>
+    <div class='footer'>
+            
+        <div class="contact">
+            <a target="_blank" href="https://github.com/mehboobpatel"><i class="fab fa-github fa-lg contact-icon"></i></a>
+            <a target="_blank" href="https://www.linkedin.com/in/maheboob-patel/"><i class="fab fa-linkedin fa-lg contact-icon"></i></a>
+            <a target="_blank" href=mailto:masterpatel786@yahoo.in><i class="far fa-envelope fa-lg contact-icon"></i></a>
+        </div>
+        <p class='footer-description'>Project by Maheboob Patel.</p>
+    </div>
+
 </body>
 </html>
 
