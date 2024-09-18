@@ -24,8 +24,8 @@ username = client.get_secret('DBUSERNAME').value
 password = client.get_secret('DBPASSWORD').value
 
 # Connect to Azure SQL DB
-server = 'voiceserver.database.windows.net'
-database = 'voicedb'
+server = 'reception.database.windows.net'
+database = 'reception'
 
 driver = '{ODBC Driver 17 for SQL Server}'
 # Use Azure AD authentication
