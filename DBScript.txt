@@ -1,0 +1,14 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[users](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[full_name] [varchar](50) NULL,
+	[purpose] [varchar](100) NULL,
+	[number] [varchar](20) NULL,
+	[gender] [varchar](10) NULL,
+	[date] [date] NULL,
+	[time] [time](7) NULL
+) ON [PRIMARY]
+GO

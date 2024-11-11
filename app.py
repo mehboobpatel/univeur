@@ -14,14 +14,19 @@ app = Flask(__name__)
 
 credential = DefaultAzureCredential()
 
-#Below we will pulling the Vault url from App service settings in Azure
-VAULT_URL = os.getenv("KEY_VAULT")
+username = 'voiceadmin'
+password = 'Voice@1234'
 
-client = SecretClient(vault_url=VAULT_URL, credential=credential)
+
+#Below we will pulling the Vault url from App service settings in Azure
+
+# VAULT_URL = os.getenv("KEY_VAULT")
+
+# client = SecretClient(vault_url=VAULT_URL, credential=credential)
 
 # Retrieve secrets from Key Vault
-username = client.get_secret('DBUSERNAME').value
-password = client.get_secret('DBPASSWORD').value
+# username = client.get_secret('DBUSERNAME').value
+# password = client.get_secret('DBPASSWORD').value
 
 # Connect to Azure SQL DB
 server = 'reception.database.windows.net'
